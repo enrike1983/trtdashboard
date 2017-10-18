@@ -39,5 +39,25 @@ class TRTApi {
         return $result;
     }
 
+    public function getTicker($fund_id="BTCEUR")
+    {
+        $url= $this->apiDomain."/funds/".$fund_id."/ticker";
+
+        $headers=array(
+            "Content-Type: application/json"
+        );
+
+        $ch=curl_init();
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_HTTPHEADER, $this->createHeaders($url, $this->apiKey, $this->apiSecret));
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+        $callResult=curl_exec($ch);
+        curl_close($ch);
+
+        $result=json_decode($callResult,true);
+
+        return $result;
+    }
+
 
 }

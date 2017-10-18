@@ -29,7 +29,6 @@ class BalanceCalculator {
     {
         $this->currentPrice = $price;
         $this->calculateBalance();
-        die(var_dump($this->balances));
     }
 
     /**
@@ -47,5 +46,15 @@ class BalanceCalculator {
     {
         return $this->finalBalance;
     }
+
+    /**
+     * @return array
+     */
+    public function getBalances()
+    {
+        return $this->balances;
+    }
+
+
 
 }

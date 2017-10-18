@@ -2,7 +2,8 @@
     "name": "stormsson/trtdashboard",
     "require": {
         "silex/silex": "^2.2",
-        "twig/twig": "^2.4"
+        "twig/twig": "^2.4",
+        "mongodb/mongodb": "^1.1"
     },
     "autoload": {
         "psr-4": {
