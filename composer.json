@@ -1,7 +1,8 @@
 {
     "name": "stormsson/trtdashboard",
     "require": {
-        "silex/silex": "^2.2"
+        "silex/silex": "^2.2",
+        "twig/twig": "^2.4"
     },
     "autoload": {
         "psr-4": {
