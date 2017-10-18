@@ -15,12 +15,16 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 $app['debug'] = true;
 
 
-$app->get('/balance/{apiKey}/{apiSecret}', function($apiKey, $apiSecret) use($app) {
+$app->get('/balance/{fundId}/{apiKey}/{apiSecret}', function($fundId, $apiKey, $apiSecret) use($app) {
 
     $trtApi = new TRTApi($apiKey, $apiSecret);
 
-    $trades = $trtApi->getTrades();
+    $trades = $trtApi->getTrades($fundId);
     $bc = new BalanceCalculator();
+
+    if(!isset($trades['trades'])) {
+       throw new \Exception('The API did not return the expected result');
+    }
 
     foreach ($trades['trades'] as $t) {
         $tmpTrade = new Trade($t);
