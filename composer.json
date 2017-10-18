@@ -1,0 +1,12 @@
+{
+    "name": "stormsson/trtdashboard",
+    "require": {
+        "silex/silex": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "TRTApi\\": "TRTApi",
+            "Dashboard\\": "Dashboard"
+        }
+    }
+}
