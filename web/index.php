@@ -10,10 +10,14 @@ use Dashboard\Entities\Trade;
 $app = new Silex\Application();
 
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__.'/views',
+    'twig.path' => __DIR__.'/../views',
 ));
 $app['debug'] = true;
 
+$app->get('/', function () use ($app) {
+    return $app['twig']->render('index.twig', [
+    ]);
+});
 
 $app->get('/balance/{apiKey}/{apiSecret}/{fundIds}', function($apiKey, $apiSecret, $fundIds) use($app) {
 

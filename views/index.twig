@@ -1,0 +1,51 @@
+{% extends 'layout/base.twig' %}
+
+{% block content %}
+	<h1>TRT</h1>
+
+	<div ng-controller="trtCtrl">
+		<img ng-if="loading" src="/images/loader.svg">
+
+		<div id="debug" ng-if="err">
+			<ul>
+				<li>Status code: [[ err.statusCode ]]</li>
+				<li>
+					<pre>
+						[[ err.data ]]
+					</pre>
+				</li>
+			</ul>
+		</div>
+
+		<form ng-submit="showBalance()">
+			<div>
+				<label for="apiKey">API key</label>
+				<input type="text" name="apiKey" ng-model="apiKey" id="apiKey">
+			</div>
+
+			<div>
+				<label for="secret">Secret</label>
+				<input type="text" name="secret" ng-model="secret" id="secret">
+			</div>
+
+			<div>
+				<label for="fundIds">Fund IDS</label>
+				<input type="text" name="fundIds" ng-model="fundIds" id="fundIds">
+			</div>
+
+			<div>
+				<input type="submit" name="" value="Show balance">
+			</div>
+		</form>
+
+		<div ng-if="response">
+			<table border="1" cellpadding="6" cellspacing="2">
+				<tr ng-repeat="(fundName, fundValue) in response.data">
+					<td><strong>[[ fundName ]]</strong></td>
+					<td>[[ fundValue.finalBalance ]]</td>
+					<td>[[ fundValue.last ]]</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+{% endblock %}
