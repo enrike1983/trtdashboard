@@ -40,6 +40,11 @@
 
 		<div ng-if="response">
 			<table border="1" cellpadding="6" cellspacing="2">
+				<tr>
+					<th>Fund</th>
+					<th>Final balance</th>
+					<th>Last value</th>
+				</tr>
 				<tr ng-repeat="(fundName, fundValue) in response.data">
 					<td><strong>[[ fundName ]]</strong></td>
 					<td>[[ fundValue.finalBalance ]]</td>
