@@ -15,30 +15,38 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 $app['debug'] = true;
 
 
-$app->get('/balance/{fundId}/{apiKey}/{apiSecret}', function($fundId, $apiKey, $apiSecret) use($app) {
+$app->get('/balance/{apiKey}/{apiSecret}/{fundIds}', function($apiKey, $apiSecret, $fundIds) use($app) {
 
     $trtApi = new TRTApi($apiKey, $apiSecret);
 
-    $trades = $trtApi->getTrades($fundId);
-    $bc = new BalanceCalculator();
+    $funds = explode(',', $fundIds);
 
-    if(!isset($trades['trades'])) {
-       throw new \Exception('The API did not return the expected result');
+    if(!count($funds)) {
+       throw new \Exception('No funds selected');
     }
 
-    foreach ($trades['trades'] as $t) {
-        $tmpTrade = new Trade($t);
-        $bc->addTrade($tmpTrade);
+    foreach($funds as $fundId) {
+        $trades = $trtApi->getTrades($fundId);
+        $bc = new BalanceCalculator();
+
+        if(!isset($trades['trades'])) {
+           throw new \Exception('The API did not return the expected result');
+        }
+
+        foreach ($trades['trades'] as $t) {
+            $tmpTrade = new Trade($t);
+            $bc->addTrade($tmpTrade);
+        }
+
+        $ticker = $trtApi->getTicker($fundId);
+        $bc->setCurrentPrice($ticker['last']);
+
+        $result[$fundId] = array(
+            'last' => $ticker['last'],
+            'balances' => $bc->getBalances(),
+            'finalBalance' => $bc->getFinalBalance()
+        );
     }
-
-    $ticker = $trtApi->getTicker($fundId);
-    $bc->setCurrentPrice($ticker['last']);
-
-    $result = array(
-        'last' => $ticker['last'],
-        'balances' => $bc->getBalances(),
-        'finalBalance' => $bc->getFinalBalance()
-    );
 
     return $app->json($result);
 
