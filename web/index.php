@@ -31,7 +31,7 @@ $app->get('/balance/{fundId}/{apiKey}/{apiSecret}', function($fundId, $apiKey, $
         $bc->addTrade($tmpTrade);
     }
 
-    $ticker = $trtApi->getTicker();
+    $ticker = $trtApi->getTicker($fundId);
     $bc->setCurrentPrice($ticker['last']);
 
     $result = array(

@@ -26,7 +26,7 @@ class TRTApi {
         return $headers;
     }
 
-    public function getTrades($fund_id="BTCEUR") {
+    public function getTrades($fund_id) {
         $url= $this->apiDomain."/funds/".$fund_id."/trades";
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,$url);
@@ -39,7 +39,7 @@ class TRTApi {
         return $result;
     }
 
-    public function getTicker($fund_id="BTCEUR")
+    public function getTicker($fund_id)
     {
         $url= $this->apiDomain."/funds/".$fund_id."/ticker";
 

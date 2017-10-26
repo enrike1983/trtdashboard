@@ -19,9 +19,11 @@ class BalanceCalculator {
 
         /* @var $trade Trade */
         foreach ($this->trades as $id => $trade) {
-            $tradeDifference = $trade->getAmount() * $this->currentPrice - $trade->getAmount() * $trade->getPrice();
-            $this->balances[$trade->getId()] = $tradeDifference;
-            $this->finalBalance += $tradeDifference;
+            if($trade->getSide() === Trade::SIDE_BUY) {
+                $tradeDifference = $trade->getAmount() * $this->currentPrice - $trade->getAmount() * $trade->getPrice();
+                $this->balances[$trade->getId()] = $tradeDifference;
+                $this->finalBalance += $tradeDifference;
+            }
         }
     }
 
