@@ -6,17 +6,21 @@
 	});
 
 	app.controller('trtCtrl', function($scope, $http) {
-		$scope.apiKey = '';
-		$scope.secret = '';
-		$scope.fundIds = 'BTCEUR,ETHEUR';
+		$scope.apiKey = localStorage.getItem('apiKey') || '';
+		$scope.secret = localStorage.getItem('secret') ||  '';
+		$scope.fundIds = localStorage.getItem('fundIds') || 'BTCEUR,ETHEUR';
 		$scope.loading = false;
 
 		$scope.showBalance = function() {
 			$scope.loading = true;
 
 			$http
-				.get('/balance/'+$scope.apiKey+'/'+$scope.secret+'/'+$scope.fundIds)
+				.get('/balance/' + $scope.apiKey + '/' + $scope.secret + '/' + $scope.fundIds)
 				.then(function(response) {
+					localStorage.setItem('apiKey', $scope.apiKey);
+					localStorage.setItem('secret', $scope.secret);
+					localStorage.setItem('fundIds', $scope.fundIds);
+
 					$scope.err = null;
 					$scope.response = response;
 					$scope.loading = false;
@@ -27,6 +31,10 @@
 					};
 					$scope.loading = false;
 				});
+		};
+
+		if ($scope.apiKey && $scope.secret && $scope.fundIds) {
+			$scope.showBalance();
 		}
 	});
 }());
