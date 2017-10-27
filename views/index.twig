@@ -42,13 +42,13 @@
 			<table border="1" cellpadding="6" cellspacing="2">
 				<tr>
 					<th>Fund</th>
-					<th>Final balance</th>
 					<th>Last value</th>
+					<th>Final balance</th>
 				</tr>
 				<tr ng-repeat="(fundName, fundValue) in response.data">
 					<td><strong>[[ fundName ]]</strong></td>
-					<td>[[ fundValue.finalBalance ]]</td>
 					<td>[[ fundValue.last ]]</td>
+					<td>[[ fundValue.finalBalance ]]</td>
 				</tr>
 			</table>
 		</div>
